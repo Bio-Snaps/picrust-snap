@@ -1,0 +1,75 @@
+name: picrust
+version: 1
+summary: predict metagenome functional content from marker gene surveys
+description: PICRUSt (pronounced “pie crust”) is a bioinformatics software package designed to predict metagenome functional content from marker gene (e.g., 16S rRNA) surveys and full genomes. PICRUSt is freely available under the GPL.'PICRUSt Phylogenetic Investigation of Communities by Reconstruction of Unobserved States\n\nPredictive functional profiling of microbial communities using 16S rRNA marker gene sequences. Langille, M. G.I.*; Zaneveld, J.*; Caporaso, J. G.; McDonald, D.; Knights, D.; a Reyes, J.; Clemente, J. C.; Burkepile, D. E.; Vega Thurber, R. L.; Knight, R.; Beiko, R. G.; and Huttenhower, C. Nature Biotechnology, 1-10. 8 2013.
+apps:
+    ancestral-state-reconstruction:
+        command: usr/bin/ancestral_state_reconstruction.py
+        plugs: [home]
+    categorize-by-function:
+        command: usr/bin/categorize_by_function.py
+        plugs: [home]
+    compare-biom:
+        command: usr/bin/compare_biom.py
+        plugs: [home]
+    evaluate-test-datasets:
+        command: usr/bin/evaluate_test_datasets.py
+        plugs: [home]
+    format-tree-and-trait-table:
+        command: usr/bin/format_tree_and_trait_table.py
+        plugs: [home]
+    make-test-datasets:
+        command: usr/bin/make_test_datasets.py
+        plugs: [home]
+    metagenome-contributions:
+        command: usr/bin/metagenome_contributions.py
+        plugs: [home]
+    normalize-by-copy-number:
+        command: usr/bin/normalize_by_copy_number.py
+        plugs: [home]
+    parallel-predict-traits:
+        command: usr/bin/parallel_predict_traits.py
+        plugs: [home]
+    pool-test-datasets:
+        command: usr/bin/pool_test_datasets.py
+        plugs: [home]
+    predict-metagenomes:
+        command: usr/bin/predict_metagenomes.py
+        plugs: [home]
+    predict-traits:
+        command: usr/bin/predict_traits.py
+        plugs: [home]
+    print-picrust-config:
+        command: usr/bin/print_picrust_config.py
+        plugs: [home]
+    run-genome-evaluations:
+        command: usr/bin/run_genome_evaluations.py
+        plugs: [home]
+    scale-metagenome:
+        command: usr/bin/scale_metagenome.py
+        plugs: [home]
+    start-parallel-jobs:
+        command: usr/bin/start_parallel_jobs.py
+        plugs: [home]
+    start-parallel-jobs-sge:
+        command: usr/bin/start_parallel_jobs_sge.py
+        plugs: [home]
+    start-parallel-jobs-torque:
+        command: usr/bin/start_parallel_jobs_torque.py
+        plugs: [home]
+parts:
+    picrust:
+        plugin: python2numpy
+        source: https://github.com/picrust/picrust/releases/download/1.0.0/picrust-1.0.0.tar.gz
+        python-packages:
+            - numpy==1.5.1
+            - biom-format==1.3.1
+            - cogent== 1.5.3
+    copy-data:
+        plugin: copy
+        source: ./data/
+        files:
+            16S_13_5_precalculated.tab.gz: usr/lib/python2.7/dist-packages/picrust/data/
+            ko_13_5_precalculated.tab.gz: usr/lib/python2.7/dist-packages/picrust/data/
+        after:
+            - picrust
